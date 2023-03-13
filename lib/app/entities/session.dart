@@ -26,19 +26,26 @@ class AppSession {
   String get headerToken => "$sessionId;$sessionToken";
 
   AppSession.createFromResponse(Map<String, dynamic> session) {
-    if (session.containsKey("id")) {
-      sessionId = session['id'].toString();
-    }
-    if (session.containsKey("token")) {
-      sessionToken = session['token'];
-    }
-    if (session.containsKey("user")) {
-      try {
-        user = AppUser.createFromApiResponse(session['user']);
-      } catch (e) {
-        log("exception while making user from response");
-        log(e.toString());
+    try {
+      log("AppSession.createFromResponse");
+      log(session.toString());
+      if (session.containsKey("id")) {
+        sessionId = session['id'].toString();
       }
+      if (session.containsKey("token")) {
+        sessionToken = session['token'];
+      }
+      if (session.containsKey("user")) {
+        try {
+          user = AppUser.createFromApiResponse(session['user']);
+        } catch (e) {
+          log("exception while making AppSession.user from response");
+          log(e.toString());
+        }
+      }
+    } catch (e) {
+      log("exception while making AppSession from response");
+      log(e.toString());
     }
   }
 }

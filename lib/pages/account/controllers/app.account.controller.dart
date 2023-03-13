@@ -13,11 +13,21 @@ class AppAccountController extends GetxController {
 
   AppUser? get currentUser => user.value;
 
-  signout() {}
-  signin() {}
-  signup() {}
+  signout() {
+    mainController.signOut(null);
+  }
 
-  appReload(BuildContext context) {}
+  signin() {
+    mainController.signIn(null);
+  }
+
+  signup() {
+    mainController.signUp(null);
+  }
+
+  appReload(BuildContext context) {
+    mainController.refreshApp();
+  }
 
   openPictureUploader(BuildContext context,
       {required Function(dynamic asset)? callback}) {}

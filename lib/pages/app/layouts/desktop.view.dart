@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:ma_friperie/app/libraries/constants.dart';
 import 'package:ma_friperie/app/libraries/theme.dart';
 import 'package:ma_friperie/app/wrappers/app.page.structure.dart';
+import 'package:ma_friperie/controllers/app.controller.dart';
 import 'package:ma_friperie/pages/app/controllers/app.holder.controller.dart';
 import 'package:side_navigation/side_navigation.dart';
 
@@ -15,6 +16,7 @@ class MainViewDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppHolderController appHolderController = Get.find();
+    AppMainController appController = Get.find();
     List<AppPageStructure> pages = appHolderController.getDesktopPages(context);
     return Scaffold(
       body: Obx(
@@ -64,14 +66,23 @@ class MainViewDesktop extends StatelessWidget {
               footer: SideNavigationBarFooter(
                 label: TextButton(
                   onPressed: () {
-                    //AppMainController controller = Get.find();
-                    //controller.goSignIn();
+                    if (appController.isConnected) {
+                      appController.signOut(context);
+                    } else {
+                      appController.signIn(context);
+                    }
                   },
                   child: Row(
-                    children: const [
-                      Icon(Icons.logout),
-                      SizedBox(width: 14),
-                      Text('Se deconnecter'),
+                    children: [
+                      Obx(
+                        () => Icon(appController.isConnected
+                            ? Icons.logout
+                            : Icons.login),
+                      ),
+                      const SizedBox(width: 14),
+                      Obx(() => Text(appController.isConnected
+                          ? 'Se deconnecter'
+                          : 'Se Connecter')),
                     ],
                   ),
                 ),

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ma_friperie/app/libraries/constants.dart';
 import 'package:ma_friperie/app/libraries/theme.dart';
+import 'package:ma_friperie/controllers/app.controller.dart';
 import 'package:ma_friperie/pages/app/app.holder.dart';
 
 class AppSplash extends StatefulWidget {
@@ -34,8 +35,9 @@ class _AppSplashState extends State<AppSplash> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void goToValidePage() {
-    Get.offAllNamed(AppHolder.routeName);
+  void goToValidePage(BuildContext context) {
+    AppMainController mainController = Get.find();
+    mainController.initUser().then((v) => Get.offAllNamed(AppHolder.routeName));
   }
 
   @override
@@ -62,7 +64,7 @@ class _AppSplashState extends State<AppSplash> with TickerProviderStateMixin {
                       ..duration = composition.duration
                       ..forward().whenComplete(() {
                         _controller.repeat();
-                        goToValidePage();
+                        goToValidePage(context);
                       });
                   },
                 ),

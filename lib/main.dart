@@ -7,7 +7,6 @@ import 'package:ma_friperie/controllers/data.service.dart';
 
 Future<void> initServices() async {
   await Get.putAsync(() => DataServices().init());
-  await Get.putAsync(() => DataServices().init());
   Get.put(AppMainController());
 }
 

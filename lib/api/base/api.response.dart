@@ -11,9 +11,9 @@ class ApiResponse {
   });
 
   ApiResponse.fromJson(Map<String, dynamic> response) {
-    if (response.containsKey("code")) {
+    if (response.containsKey("successful")) {
       try {
-        isSuccessful = int.parse(response['code'].toString()) == 1;
+        isSuccessful = response['successful'] as bool;
       } catch (e) {
         isSuccessful = false;
       }

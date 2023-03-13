@@ -1,14 +1,57 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:ma_friperie/api/base/api.response.dart';
+import 'package:ma_friperie/api/base/routes/api.routes.dart';
 
 class MainApiConnect extends GetConnect {
-  static bool isProd = true;
-  static String localDomain = "https://127.0.0.1:8000";
-  static String domain = "https://digexpertise.com";
+  static String get currentDomain => MainApiRoutes.currentDomain;
+  final String token;
 
-  final String sessionId;
-  final String sessionToken;
+  MainApiConnect({this.token = ""});
 
-  MainApiConnect({this.sessionId = "", this.sessionToken = ""});
+  Future<ApiResponse> login(String username, String password) async {
+    try {
+      final response = await post(
+        '$currentDomain/${MainApiRoutes.login}',
+        {
+          'username': username,
+          'password': password,
+        },
+      );
+      final responseBody = jsonDecode(response.bodyString ?? "");
+      return ApiResponse.responseFromJson(responseBody);
+    } catch (e) {
+      return ApiResponse(
+        isSuccessful: false,
+        error: ApiResponseError(
+          code: "error",
+          title: "Attention",
+          message: e.toString(),
+        ),
+      );
+    }
+  }
 
-  static String get currentDomain => isProd ? domain : localDomain;
+  Future<ApiResponse> validateToken(String token) async {
+    final response = await get(
+      '$currentDomain/${MainApiRoutes.validate}',
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.status.isOk) {
+      final responseBody = jsonDecode(response.bodyString ?? "");
+      return ApiResponse.responseFromJson(responseBody);
+    } else {
+      return ApiResponse(
+        isSuccessful: false,
+        error: ApiResponseError(
+          code: "error",
+          title: "Attention",
+          message: "Quelque chose s'est mal passé",
+        ),
+      );
+    }
+  }
 }

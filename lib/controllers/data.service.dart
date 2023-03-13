@@ -14,4 +14,12 @@ class DataServices extends GetxService {
   Future<int> loadCounter() async {
     return int.tryParse(GetStorage().read("counter").toString()) ?? 0;
   }
+
+  Future<void> saveToken(String? token) async {
+    GetStorage().write("token", token);
+  }
+
+  Future<String?> getToken() async {
+    return GetStorage().read("token")?.toString();
+  }
 }
