@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ma_friperie/api/providers/auth.api.provider.dart';
+import 'package:ma_friperie/api/providers/products.api.provider.dart';
+import 'package:ma_friperie/app/entities/product.collection.dart';
+import 'package:ma_friperie/app/entities/product.dart';
 import 'package:ma_friperie/app/entities/session.dart';
 import 'package:ma_friperie/app/entities/user.dart';
 import 'package:ma_friperie/controllers/data.service.dart';
@@ -21,11 +24,14 @@ class AppMainController extends GetxController {
 
   AppMainController() {
     dataServices = Get.find();
-    initUser();
-    initCounter();
+    refreshApp();
   }
 
-  refreshApp() {}
+  refreshApp() {
+    initToken();
+    initCounter();
+    initUser();
+  }
 
   Future<AppUser?> initUser() async {
     String? token = await dataServices.getToken();
@@ -48,6 +54,10 @@ class AppMainController extends GetxController {
       setUser(curSession.user);
     }
     notifyChildrens();
+  }
+
+  initToken() {
+    dataServices.getToken().then((String? value) => setToken("$value"));
   }
 
   initCounter() {
@@ -96,5 +106,25 @@ class AppMainController extends GetxController {
 
   signUp(BuildContext? context) {
     //Get.toNamed(AppLogin)
+  }
+
+  Future<List<AppProduct>> getProducts({
+    String locale = "fr",
+    String collection = "top",
+  }) async {
+    AppProductsApiProvider productsApiProvider = AppProductsApiProvider();
+    return productsApiProvider.getProducts(
+      locale: locale,
+      collection: collection,
+    );
+  }
+
+  Future<List<AppProductCollection>> getProductsCollection({
+    String locale = "fr",
+  }) async {
+    AppProductsApiProvider productsApiProvider = AppProductsApiProvider();
+    return productsApiProvider.getProductsCollections(
+      locale: locale,
+    );
   }
 }

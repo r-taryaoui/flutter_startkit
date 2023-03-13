@@ -13,11 +13,11 @@ class AppProductsListCard extends StatelessWidget {
     AppHomeController homeController = Get.find();
     return Obx(
       () => AppTitledCard(
-        title: "Dernieres Produits ",
+        title: "Dernieres Produits",
         action: Row(
           children: [
             AppTextIconButton(
-              onPressed: homeController.mockLoading,
+              onPressed: homeController.getProducts,
               title: "Actualiser",
               icon: (homeController.isLoadingCards.value)
                   ? const SizedBox(
@@ -40,7 +40,8 @@ class AppProductsListCard extends StatelessWidget {
                   children: AppProductViewCard.buildLoadingList(context),
                 )
               : Row(
-                  children: AppProductViewCard.buildSampleList(context),
+                  children: AppProductViewCard.buildList(
+                      context, homeController.listProducts.value ?? []),
                 ),
         ),
       ),

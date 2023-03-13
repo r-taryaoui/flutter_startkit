@@ -19,6 +19,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   side_navigation: ^1.0.4
   flutter_svg: ^2.0.2
+  fast_cached_network_image: ^1.1.1
 
 dev_dependencies:
   flutter_test:

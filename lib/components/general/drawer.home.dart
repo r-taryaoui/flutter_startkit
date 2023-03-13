@@ -69,13 +69,17 @@ class AppHomeDrawer extends StatelessWidget {
               Obx(
                 () => appController.isConnected
                     ? ListTile(
-                        onTap: () {},
+                        onTap: () {
+                          appController.signOut(context);
+                        },
                         leading: const Icon(Icons.logout),
                         title: const Text("Se Déconnecter"),
                         trailing: const Icon(Icons.chevron_right),
                       )
                     : ListTile(
-                        onTap: () {},
+                        onTap: () {
+                          appController.signIn(context);
+                        },
                         leading: const Icon(Icons.login),
                         title: const Text("Se Connecter"),
                         trailing: const Icon(Icons.chevron_right),

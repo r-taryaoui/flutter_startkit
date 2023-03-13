@@ -5,7 +5,9 @@ import 'package:ma_friperie/app/libraries/constants.dart';
 import 'package:ma_friperie/app/libraries/theme.dart';
 import 'package:ma_friperie/components/general/drawer.home.dart';
 import 'package:ma_friperie/pages/home/components/cards/products.collections.list.card.dart';
+import 'package:ma_friperie/pages/home/components/cards/products.last.list.card.dart';
 import 'package:ma_friperie/pages/home/components/cards/products.list.card.dart';
+import 'package:ma_friperie/pages/home/components/cards/products.top.list.card.dart';
 import 'package:ma_friperie/pages/home/controllers/home.controller.dart';
 
 class AppHomePage extends StatefulWidget {
@@ -50,6 +52,8 @@ class _AppHomePageState extends State<AppHomePage> {
           children: const [
             AppProductsCollectionsCard(),
             AppProductsListCard(),
+            AppTopProductsListCard(),
+            AppLastProductsListCard(),
           ],
         ),
       ),

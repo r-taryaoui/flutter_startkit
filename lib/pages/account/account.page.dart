@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ma_friperie/app/libraries/theme.dart';
+import 'package:ma_friperie/controllers/app.controller.dart';
 import 'package:ma_friperie/pages/account/controllers/app.account.controller.dart';
 
 class AppAccountPageView extends StatefulWidget {
@@ -14,10 +15,12 @@ class AppAccountPageView extends StatefulWidget {
 }
 
 class _AppAccountPageViewState extends State<AppAccountPageView> {
-  late AppAccountController accountController = AppAccountController();
+  AppAccountController accountController = AppAccountController();
+  AppMainController appMainController = Get.find();
   @override
   void initState() {
     Get.put(accountController);
+
     super.initState();
   }
 
@@ -124,6 +127,7 @@ class _AppAccountPageViewState extends State<AppAccountPageView> {
           const SizedBox(height: 22),
           ListTile(
             onTap: () {
+              appMainController.refreshApp();
               Get.snackbar(
                   "Actualisation", "Actualisation d'application en cours");
             },
@@ -208,6 +212,17 @@ class _AppAccountPageViewState extends State<AppAccountPageView> {
           trailing: const Icon(
             Icons.chevron_right,
           ),
+        ),
+        const SizedBox(height: 22),
+        ListTile(
+          onTap: () {
+            appMainController.refreshApp();
+            Get.snackbar(
+                "Actualisation", "Actualisation d'application en cours");
+          },
+          leading: const Icon(Icons.refresh),
+          tileColor: AppGlobalTheme.getThemeBackgroundColor(context),
+          title: const Text("Actualiser l'application"),
         ),
         const SizedBox(height: 22),
       ],

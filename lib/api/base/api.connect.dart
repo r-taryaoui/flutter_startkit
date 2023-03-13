@@ -54,4 +54,54 @@ class MainApiConnect extends GetConnect {
       );
     }
   }
+
+  Future<ApiResponse> getREST(String url) async {
+    final response = await get(
+      url,
+      headers: getHeaders(),
+    );
+    if (response.status.isOk) {
+      final responseBody = jsonDecode(response.bodyString ?? "");
+      return ApiResponse.responseFromJson(responseBody);
+    } else {
+      return ApiResponse(
+        isSuccessful: false,
+        error: ApiResponseError(
+          code: "error",
+          title: "Attention",
+          message: "Quelque chose s'est mal passé",
+        ),
+      );
+    }
+  }
+
+  Future<ApiResponse> postREST(String url, Map<String, dynamic> data) async {
+    final response = await post(
+      url,
+      data,
+      headers: getHeaders(),
+    );
+    if (response.status.isOk) {
+      final responseBody = jsonDecode(response.bodyString ?? "");
+      return ApiResponse.responseFromJson(responseBody);
+    } else {
+      return ApiResponse(
+        isSuccessful: false,
+        error: ApiResponseError(
+          code: "error",
+          title: "Attention",
+          message: "Quelque chose s'est mal passé",
+        ),
+      );
+    }
+  }
+
+  Map<String, String>? getHeaders() {
+    if (token.isNotEmpty) {
+      return {
+        'Authorization': 'Bearer $token',
+      };
+    }
+    return null;
+  }
 }

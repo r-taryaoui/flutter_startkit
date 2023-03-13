@@ -65,7 +65,7 @@ class AppGlobalTheme {
 
   static ThemeData getMaterialThemeData(BuildContext context) {
     return ThemeData(
-      useMaterial3: true,
+      //useMaterial3: true,
       primarySwatch: primaryColor,
       brightness: Brightness.light,
     );
